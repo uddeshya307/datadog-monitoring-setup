@@ -1,0 +1,137 @@
+argocd-apps:
+  applications: 
+    argo: 
+      namespace: argocd
+      additionalLabels: {}
+      additionalAnnotations: {}
+      project: default
+      source:
+        repoURL: https://github.com/uddeshya307/datadog-monitoring-setup.git
+        targetRevision: main
+        path: k8s/helm/chart/addons/argo/argo-cd
+        helm:
+          releaseName: argo
+          valueFiles:
+            - values.yaml
+      destination: 
+        server: https://kubernetes.default.svc
+        namespace: argocd
+      syncPolicy: {}
+  
+    argo-project:
+      namespace: argocd
+      additionalLabels: {}
+      additionalAnnotations: {}
+      project: default
+      source:
+        repoURL: https://github.com/uddeshya307/datadog-monitoring-setup.git
+        targetRevision: main
+        path: k8s/helm/chart/addons/argo/argo-projects
+        helm:
+          releaseName: argo
+          valueFiles:
+            -  values.yaml
+      destination: 
+        server: https://kubernetes.default.svc
+        namespace: argocd
+      syncPolicy:
+        automated: {}
+    
+    argo-resource:
+      namespace: argocd
+      additionalLabels: {}
+      additionalAnnotations: {}
+      project: default
+      source:
+        repoURL: https://github.com/uddeshya307/datadog-monitoring-setup.git
+        targetRevision: main
+        path: k8s/helm/chart/addons/argo/argo-resources
+        helm:
+          releaseName: argo
+          valueFiles:
+            -  values.yaml
+      destination: 
+        server: https://kubernetes.default.svc
+        namespace: argocd
+      syncPolicy:
+        automated: {}
+    
+    argo-apps:
+      namespace: argocd
+      additionalLabels: {}
+      additionalAnnotations: {}
+      project: default
+      source:
+        repoURL: https://github.com/uddeshya307/datadog-monitoring-setup.git
+        targetRevision: main
+        path: k8s/helm/chart/addons/argo/argo-applications/argo-apps
+        directory:
+          recurse: true
+      destination: 
+        server: https://kubernetes.default.svc
+        namespace: argocd
+      syncPolicy:
+        automated: {}
+        
+    argo-addons:
+      namespace: argocd
+      additionalLabels: {}
+      additionalAnnotations: {}
+      project: default
+      source:
+        repoURL: https://github.com/uddeshya307/datadog-monitoring-setup.git
+        targetRevision: main
+        path: k8s/helm/chart/addons/argo/argo-applications/argo-addons
+        directory:
+          recurse: true  
+      destination: 
+        server: https://kubernetes.default.svc
+        namespace: argocd
+      syncPolicy:
+        automated: {}  
+    
+    argo-monitoring:
+      namespace: argocd
+      additionalLabels: {}
+      additionalAnnotations: {}
+      project: default
+      source:
+        repoURL:  https://github.com/uddeshya307/datadog-monitoring-setup.git
+        targetRevision: main
+        path: k8s/helm/chart/addons/argo/argo-applications/argo-monitoring
+        directory:
+          recurse: true  
+      destination: 
+        server: https://kubernetes.default.svc
+        namespace: argocd
+      syncPolicy:
+        automated: {}  
+    
+    
+#    argo-infra:
+#      namespace: argocd
+#      additionalLabels: {}
+#      additionalAnnotations: {}
+#      project: default
+#      source:
+#        repoURL:  https://github.com/uddeshya307/datadog-monitoring-setup.git
+#        targetRevision: main
+#        path: k8s/helm/chart/addons/argo/argo-applications/argo-infra
+#        directory:
+#          recurse: true  
+#      destination: 
+#        server: https://kubernetes.default.svc
+#        namespace: argocd
+#       syncPolicy:
+#         automated: {}
+        
+
+    
+#  extensions:
+#    rollout-extension:
+#      namespace: argocd
+#      additionalLabels: {}
+#      additionalAnnotations: {}
+#      source:
+#        web:
+#          url: https://github.com/argoproj-labs/rollout-extension/releases/download/v0.3.7/extension.tar
