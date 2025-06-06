@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.nginx.name }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  replicas: 1
+  template:
+    spec:
+      containers:
+      - name: {{ .Values.nginx.name }}
+        image: nginx:latest
+        env:
+        - name: DD_ENV
+          value: "test"
+        - name: DD_SERVICE
+          value: "nginx"
+        - name: DD_VERSION
+          value: "latest"
