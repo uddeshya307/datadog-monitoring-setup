@@ -36,7 +36,16 @@ spec:
             - name: DD_LOGS_CONFIG_CONTAINER_COLLECT_ALL
               value: "true"
             - name: DD_CONTAINER_EXCLUDE
-              value: name:datadog-agent    
+              value: name:datadog-agent  
+            - name: DD_CONTAINER_LOGS
+              value: 'true'
+            - name: DD_KUBERNETES_KUBELET_HOST
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                    fieldPath: status.hostIP
+            - name: DD_KUBELET_TLS_VERIFY
+              value: 'false'              
           resources:
             limits:
               memory: 512Mi
@@ -51,6 +60,12 @@ spec:
             - name: cgroups
               mountPath: /host/sys/fs/cgroup
               readOnly: true
+            - name: logs
+              mountPath: /var/log/pods
+              readOnly: true
+            - name: containers
+              mountPath: /var/lib/docker/containers
+              readOnly: true             
       volumes:
         - name: dockersocket
           hostPath:
@@ -61,3 +76,9 @@ spec:
         - name: cgroups
           hostPath:
             path: /sys/fs/cgroup
+        - name: logs
+          hostPath:
+            path: /var/log/pods
+        - name: containers
+          hostPath:
+            path: /var/lib/docker/containers            
