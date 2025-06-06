@@ -1,14 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Values.nginx.name }}
+  name: {{ .Values.microservice.name }}
   namespace: {{ .Release.Namespace }}
+  labels:
+    app: {{ .Values.microservice.name }}
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app:  {{ .Values.microservice.name }}
   template:
+    metadata:
+      labels:
+        app:  {{ .Values.microservice.name }}   
     spec:
       containers:
-      - name: {{ .Values.nginx.name }}
+      - name: {{ .Values.microservice.name }}
         image: nginx:latest
         env:
         - name: DD_ENV
