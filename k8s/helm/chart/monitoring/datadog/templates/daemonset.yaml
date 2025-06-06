@@ -15,23 +15,24 @@ spec:
         app: {{ .Values.datadog.name }}
     spec:
       containers:
-      - name: {{ .Values.datadog.name }}
-        image: gcr.io/datadoghq/agent:latest
-        env:
-          - name: DD_API_KEY
-            valueFrom:
-              secretKeyRef:
-                name: datadog-secret
-                key: api-key
-          - name: DD_SITE
-            value: "datadoghq.com"
-        resources:
-          limits:
-            memory: 512Mi
-            cpu: 500m
-        volumeMounts:
-            mountPath: /host/proc
-            readOnly: true
+        - name: {{ .Values.datadog.name }}
+          image: gcr.io/datadoghq/agent:latest
+          env:
+            - name: DD_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: datadog-secret
+                  key: api-key
+            - name: DD_SITE
+              value: "datadoghq.com"
+          resources:
+            limits:
+              memory: 512Mi
+              cpu: 500m
+          volumeMounts:
+            - mountPath: /host/proc
+              name: proc
+              readOnly: true
       volumes:
         - name: proc
           hostPath:
