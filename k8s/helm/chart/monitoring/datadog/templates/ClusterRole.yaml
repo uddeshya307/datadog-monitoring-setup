@@ -11,9 +11,10 @@ rules:
     - pods
     - nodes
     - componentstatuses
+    - nodes/stats
   verbs: ["get", "list", "watch"]
 - apiGroups: [""]
-  resources: ["nodes/proxy", "nodes/metrics", "nodes/spec"]
+  resources: ["nodes/proxy", "nodes/metrics", "nodes/spec", "nodes/stats"]
   verbs: ["get"]
 - nonResourceURLs: ["/version", "/healthz"]
   verbs: ["get"]
