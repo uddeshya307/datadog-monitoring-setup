@@ -46,7 +46,9 @@ spec:
                   apiVersion: v1
                   fieldPath: status.hostIP
             - name: DD_KUBELET_TLS_VERIFY
-              value: 'false'              
+              value: 'false'      
+            - name: DD_APM_ENABLED
+              value: "true"              
           resources:
             limits:
               memory: 512Mi

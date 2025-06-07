@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.microservice.name }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: {{ .Values.microservice.name }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Values.microservice.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.microservice.name }}
+    spec:
+      containers:
+      - name: {{ .Values.microservice.name }}
+        image: nodejs-apm:latest
+        ports:
+        - containerPort: 3000
+        env:
+        - name: DD_AGENT_HOST
+          valueFrom:
+            fieldRef:
+              fieldPath: status.hostIP
+        - name: DD_ENV
+          value: "test"
+        - name: DD_SERVICE
+          value: "nodejs-apm"
+        - name: DD_VERSION
+          value: "1.0.0"
